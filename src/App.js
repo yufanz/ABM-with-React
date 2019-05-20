@@ -50,6 +50,9 @@ class App extends Component {
         aggregate_wealth: nAgents * vWealth,
         layout_xrange_min: layout_xrange_min,
         layout_xrange_max: layout_xrange_max,
+        nAgents: nAgents,
+        vDebt: vDebt,
+        vWealth: vWealth,
       },
       data: {
         aggregate_bottom_50_pct: [vWealth*nAgents*0.5],
@@ -78,6 +81,9 @@ class App extends Component {
       aggregate_wealth: this.state.parameters.nAgents * this.state.parameters.vWealth,
       layout_xrange_min: -this.state.parameters.vDebt,
       layout_xrange_max: this.state.parameters.vWealth * 5,
+      nAgents: this.state.parameters.nAgents,
+      vDebt: this.state.parameters.vDebt,
+      vWealth: this.state.parameters.vWealth,
     })
   }
 
@@ -159,19 +165,19 @@ class App extends Component {
     var n_benefactors = 0;
     var newX = this.state.data.wealth.slice();
     for (var i = 0; i < newX.length; i++) {
-      if (newX[i] > -this.state.parameters.vDebt) {
+      if (newX[i] > -this.state.constants.vDebt) {
         newX[i] -= 1;
         n_benefactors += 1;
       }
     }
     for (var j = 0; j < n_benefactors; j++){
-      newX[Math.floor(Math.random() * this.state.parameters.nAgents)] += 1;
+      newX[Math.floor(Math.random() * this.state.constants.nAgents)] += 1;
     }
     var newX_sorted = newX.slice().sort(numericSort);
     var aggregate_bottom_50_pct = this.state.data.aggregate_bottom_50_pct.slice();
-    aggregate_bottom_50_pct.push(newX_sorted.slice(0, this.state.parameters.nAgents*0.5).reduce(numericSum));
+    aggregate_bottom_50_pct.push(newX_sorted.slice(0, this.state.constants.nAgents*0.5).reduce(numericSum));
     var aggregate_top_10_pct = this.state.data.aggregate_top_10_pct.slice();
-    aggregate_top_10_pct.push(newX_sorted.slice(this.state.parameters.nAgents*0.9).reduce(numericSum));
+    aggregate_top_10_pct.push(newX_sorted.slice(this.state.constants.nAgents*0.9).reduce(numericSum));
 
     this.setState({
       color: this.state.color,
@@ -213,7 +219,7 @@ class App extends Component {
 
   group() {
     const wealth = this.state.data.wealth
-    const nAgents = this.state.parameters.nAgents
+    const nAgents = this.state.constants.nAgents
     const rank = argsort(wealth, nAgents)
     this.setState({
       color: rank.map(function(rank) { return colorFunction(rank, nAgents)}),
@@ -274,7 +280,7 @@ class App extends Component {
         <Plot
           data={[{
             x: this.state.data.wealth,
-            y: Array.apply(null, {length: this.state.parameters.nAgents}).map(Number.call, Number),
+            y: Array.apply(null, {length: this.state.data.wealth.length}).map(Number.call, Number),
             type: 'scatter',
             mode: 'markers',
             marker: {

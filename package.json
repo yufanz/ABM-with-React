@@ -4,9 +4,14 @@
   "private": true,
   "dependencies": {
     "gh-pages": "^2.0.1",
+    "plotly.js": "^1.47.4",
+    "ramda": "^0.26.1",
+    "rc-slider": "^8.6.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-plotly.js": "^2.3.0",
+    "react-scripts": "3.0.1",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "predeploy": "npm run build",

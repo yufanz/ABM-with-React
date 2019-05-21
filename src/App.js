@@ -1,10 +1,17 @@
+
 import LEDDisplay from './dash-daq/components/LEDDisplay.react';
 import Plot from 'react-plotly.js';
 import React, { Component } from 'react'
 import Slider from './dash-core-components/components/Slider.react'
 
-import logo from './logo.svg';
-import './App.css';
+// import { Button, Col, Container, Row } from 'reactstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+
+// import logo from './logo.svg';
+// import './App.css';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './bWLwgP.css';
 
 const msPerIteration = 10
 
@@ -236,96 +243,197 @@ class App extends Component {
     const aggregate_top_10_pct = this.state.data.aggregate_top_10_pct.slice()[this.state.data.aggregate_top_10_pct.length-1]
     return (
       <div>
-        <Slider
-          id='nAgents'
-          marks={{10:'10', 100:'100', 200:'200'}}
-          max={200}
-          min={10}
-          onChange={(value)=>{this.updateNAgents(value)}}
-          onAfterChange={(value)=>{this.updateNAgents(value)}}
-          step={200}
-          style={{'marginBottom': 40, 'marginLeft': 40, 'marginRight': 40, 'marginTop': 40, 'height': 100}}
-          value={this.state.parameters.nAgents}
-        />
-        <Slider
-          id='vDebt'
-          marks={{0:'0', 10:'10', 20:'20', 50:'50'}}
-          max={50}
-          min={0}
-          onChange={(value)=>{this.updateVDebt(value)}}
-          onAfterChange={(value)=>{this.updateVDebt(value)}}
-          step={50}
-          style={{'marginBottom': 40, 'marginLeft': 40, 'marginRight': 40, 'height': 100}}
-          value={this.state.parameters.vDebt}
-        />
-        <Slider
-          id='vWealth'
-          marks={{1:'1', 10:'10', 20:'20', 50:'50'}}
-          max={50}
-          min={1}
-          onChange={(value)=>{this.updateVWealth(value)}}
-          onAfterChange={(value)=>{this.updateVWealth(value)}}
-          step={50}
-          style={{'marginBottom': 40, 'marginLeft': 40, 'marginRight': 40, 'height': 100}}
-          value={this.state.parameters.vWealth}
-        />
-        <button onClick={() => this.setup()} >Setup</button>
-        <button onClick={() => this.step()} >Step</button>
-        <button onClick={() => this.play()} >Play / Pause</button>
-        <button onClick={() => this.group()} >Group</button>
-        <LEDDisplay value={this.state.iterations}/>
-        <LEDDisplay value={aggregate_bottom_50_pct}/>
-        <LEDDisplay value={aggregate_top_10_pct}/>
-        <LEDDisplay value={this.state.constants.aggregate_wealth}/>
-        <Plot
-          data={[{
-            x: this.state.data.wealth,
-            y: Array.apply(null, {length: this.state.data.wealth.length}).map(Number.call, Number),
-            type: 'scatter',
-            mode: 'markers',
-            marker: {
-              color: this.state.color,
-            },
-          }]}
-          layout={
-            {
-              hovermode: 'closest',
-              xaxis: {
-                range: [this.state.constants.layout_xrange_min, this.state.constants.layout_xrange_max],
-              }
-            }
-          }
-        />
-        <Plot
-          data={[{
-            x: this.state.data.wealth,
-            histnorm: 'probability',
-            type: 'histogram',
-          }]}
-          layout={{
-            hovermode: 'closest',
-            xaxis: {
-              range: [this.state.constants.layout_xrange_min, this.state.constants.layout_xrange_max],
-            },
-            yaxis: {
-              range: [0, 1],
-            }
-          }}
-        />
-        <Plot
-          data={[
-            {
-              x: Array.apply(null, {length: this.state.data.aggregate_bottom_50_pct.length}).map(Number.call, Number),
-              y: this.state.data.aggregate_bottom_50_pct,
-              type: 'scatter',
-            },
-            {
-              x: Array.apply(null, {length: this.state.data.aggregate_bottom_50_pct.length}).map(Number.call, Number),
-              y: this.state.data.aggregate_top_10_pct,
-              type: 'scatter',
-            },
-          ]}
-        />
+        <Container style={{marginTop: 40}}>
+          <h1>Simple Economy Extended</h1>
+          <div>The purpose of this simple web app is to illustrate</div>
+          <div>that a population with equal initial wealth and fair rules</div>
+          <div>can evolve into an extremely unequal economy</div>
+          <div>where the richest 10% owns more than the poorest 50%.</div>
+        </Container>
+
+        <Container style={{marginTop: 40}}>
+          <div>Initially, everybody has the same amount of money, say $20.</div>
+          <div>On each day, everybody with at least $1 gives $1 to someone else randomly.</div>
+        </Container>
+
+        <Container style={{marginTop: 40}}>
+          <h3>Parameters</h3>
+          <Row>
+            <Col>How many agents are there?</Col>
+            <Col>How much debt is allowed?</Col>
+            <Col>How much do agents have initially?</Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <Row>
+            <Col>
+              <Slider
+                id='nAgents'
+                marks={{10:'10', 100:'100', 200:'200'}}
+                max={200}
+                min={10}
+                onChange={(value)=>{this.updateNAgents(value)}}
+                onAfterChange={(value)=>{this.updateNAgents(value)}}
+                step={200}
+                // style={{'marginBottom': 40, 'marginLeft': 40, 'marginRight': 40, 'marginTop': 40, 'height': 100}}
+                value={this.state.parameters.nAgents}
+              />
+            </Col>
+            <Col>
+              <Slider
+                id='vDebt'
+                marks={{0:'0', 10:'10', 20:'20', 50:'50'}}
+                max={50}
+                min={0}
+                onChange={(value)=>{this.updateVDebt(value)}}
+                onAfterChange={(value)=>{this.updateVDebt(value)}}
+                step={50}
+                // style={{'marginBottom': 40, 'marginLeft': 40, 'marginRight': 40, 'height': 100}}
+                value={this.state.parameters.vDebt}
+              />
+            </Col>
+            <Col>
+              <Slider
+                id='vWealth'
+                marks={{1:'1', 10:'10', 20:'20', 50:'50'}}
+                max={50}
+                min={1}
+                onChange={(value)=>{this.updateVWealth(value)}}
+                onAfterChange={(value)=>{this.updateVWealth(value)}}
+                step={50}
+                // style={{'marginBottom': 40, 'marginLeft': 40, 'marginRight': 40, 'height': 100}}
+                value={this.state.parameters.vWealth}
+              />
+            </Col>
+          </Row>
+        </Container>
+        
+        <Container style={{marginTop: 40}}>
+          <h3>Control Buttons (Click SETUP to apply parameters)</h3>
+          <Row>
+            <Col><Button onClick={() => this.setup()} style={{width: 100}} >Setup</Button></Col>
+            <Col><Button onClick={() => this.step()} style={{width: 100}}>Step</Button></Col>
+            <Col><Button onClick={() => this.play()} style={{width: 100}}>Play / Pause</Button></Col>
+            <Col><Button onClick={() => this.group()} style={{width: 100}}>Group</Button></Col>
+          </Row>
+        </Container>
+
+        <Container >
+          <Row>
+            <Col>
+              <Plot
+                data={[{
+                  x: this.state.data.wealth,
+                  y: Array.apply(null, {length: this.state.data.wealth.length}).map(Number.call, Number),
+                  type: 'scatter',
+                  mode: 'markers',
+                  marker: {
+                    color: this.state.color,
+                  },
+                }]}
+                layout={
+                  {
+                    hovermode: 'closest',
+                    xaxis: {
+                      range: [this.state.constants.layout_xrange_min, this.state.constants.layout_xrange_max],
+                    }
+                  }
+                }
+              />
+            </Col>
+          </Row>
+        </Container>
+        
+        <Container>
+          <Row>
+            <Col>Time (days)</Col>
+            <Col>Poorest 50% combined ($)</Col>
+            <Col>Richest 10% combined ($)</Col>
+            <Col>Total wealth in the economy ($)</Col>
+          </Row>
+          <Row>
+            <Col><LEDDisplay value={this.state.iterations}/></Col>
+            <Col><LEDDisplay value={aggregate_bottom_50_pct}/></Col>
+            <Col><LEDDisplay value={aggregate_top_10_pct}/></Col>
+            <Col><LEDDisplay value={this.state.constants.aggregate_wealth}/></Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <Row>
+            <Col>
+              <Plot
+                data={[
+                  {
+                    x: Array.apply(null, {length: this.state.data.aggregate_bottom_50_pct.length}).map(Number.call, Number),
+                    y: this.state.data.aggregate_bottom_50_pct,
+                    type: 'scatter',
+                  },
+                  {
+                    x: Array.apply(null, {length: this.state.data.aggregate_bottom_50_pct.length}).map(Number.call, Number),
+                    y: this.state.data.aggregate_top_10_pct,
+                    type: 'scatter',
+                  },
+                ]}
+              />
+            </Col>
+          </Row>
+        </Container>
+        
+        <Container style={{marginTop: 40}}>
+          <h3>Uniform or Normal?</h3>
+          <div>You would think that after some time, the distribution of wealth is uniform. Or at least normal.</div>
+          <div>But no. It's exponential, i.e. the richest 10% will have more money than the poorest 50%.</div>
+        </Container>
+
+        <Container>
+          <Row>
+            <Col>
+              <Plot
+                data={[{
+                  x: this.state.data.wealth,
+                  histnorm: 'probability',
+                  type: 'histogram',
+                }]}
+                layout={{
+                  hovermode: 'closest',
+                  xaxis: {
+                    range: [this.state.constants.layout_xrange_min, this.state.constants.layout_xrange_max],
+                  },
+                  yaxis: {
+                    range: [0, 1],
+                  }
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+
+        <Container style={{marginTop: 40}}>
+          <h3>Why is that?</h3>
+          <div>You can't give any money if you don't have any money to give.</div>
+          <div>So if you are poor, you stay poor, because you can't get any poorer.</div>
+        </Container>
+
+        <Container style={{marginTop: 40}}>
+          <h3>Actually, that is not true. You can get poorer.</h3>
+          <div>If you are allowed to have debts.</div>
+          <div>Adjust the parameter for debt to observe.</div>
+        </Container>
+
+        <Container style={{marginTop: 40}}>
+          <h3>And you can get richer</h3>
+          <div>The poor can get rich, and the rich can get poor.</div>
+          <div>Click group to color the poorest 50% and the richest 10% to track their movements.</div>
+        </Container>
+
+        <Container style={{marginTop: 40, marginBottom: 100}}>
+          <h1>About the model</h1>
+          <p>Simple Economy is an agent-based model in Dr. Uri Wilensky's Introduction to Agent-Based Modeling, 
+          originally implemented in NetLogo.</p>
+          <p>This web app implements the functionalities of the original model, as well as some features suggested by Dr Wilensky.</p>
+        </Container>
       </div>
     )
   }

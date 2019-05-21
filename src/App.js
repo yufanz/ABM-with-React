@@ -241,6 +241,10 @@ class App extends Component {
   render() {
     const aggregate_bottom_50_pct = this.state.data.aggregate_bottom_50_pct.slice()[this.state.data.aggregate_bottom_50_pct.length-1]
     const aggregate_top_10_pct = this.state.data.aggregate_top_10_pct.slice()[this.state.data.aggregate_top_10_pct.length-1]
+
+    const aggregate_bottom_50_pct_value = (aggregate_bottom_50_pct >= 0) ? (aggregate_bottom_50_pct) : (-aggregate_bottom_50_pct)
+    const aggregate_bottom_50_pct_color = aggregate_bottom_50_pct >= 0 ? 'white' : '#303030'
+
     return (
       <div>
         <Container style={{marginTop: 40}}>
@@ -354,7 +358,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col><LEDDisplay value={this.state.iterations}/></Col>
-            <Col><LEDDisplay value={aggregate_bottom_50_pct}/></Col>
+            <Col><LEDDisplay value={aggregate_bottom_50_pct_value} backgroundColor={aggregate_bottom_50_pct_color} /></Col>
             <Col><LEDDisplay value={aggregate_top_10_pct}/></Col>
             <Col><LEDDisplay value={this.state.constants.aggregate_wealth}/></Col>
           </Row>

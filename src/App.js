@@ -39,7 +39,7 @@ const argsort = function(wealth, nAgents) {
   return resorted.map(function(i){return i.rank})
 }
 
-const nAgents = 10
+const nAgents = 100
 const vDebt = 0
 const vWealth = 20
 const color = Array(nAgents).fill(colorMutedBlue)
@@ -296,9 +296,9 @@ class App extends Component {
             <Col>
               <Slider
                 id='vWealth'
-                marks={{1:'1', 10:'10', 20:'20', 50:'50'}}
+                marks={{10:'10', 20:'20', 50:'50'}}
                 max={50}
-                min={1}
+                min={10}
                 onChange={(value)=>{this.updateVWealth(value)}}
                 onAfterChange={(value)=>{this.updateVWealth(value)}}
                 step={50}

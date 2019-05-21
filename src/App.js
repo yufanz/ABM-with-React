@@ -248,7 +248,7 @@ class App extends Component {
           <div>The purpose of this simple web app is to illustrate</div>
           <div>that a population with equal initial wealth and fair rules</div>
           <div>can evolve into an extremely unequal economy</div>
-          <div>where the richest 10% owns more than the poorest 50%.</div>
+          <div>where the richest 10% has more money than the poorest 50% does.</div>
         </Container>
 
         <Container style={{marginTop: 40}}>
@@ -261,7 +261,7 @@ class App extends Component {
           <Row>
             <Col>How many agents are there?</Col>
             <Col>How much debt is allowed?</Col>
-            <Col>How much do agents have initially?</Col>
+            <Col>How much money do agents have initially?</Col>
           </Row>
         </Container>
 
@@ -369,11 +369,13 @@ class App extends Component {
                     x: Array.apply(null, {length: this.state.data.aggregate_bottom_50_pct.length}).map(Number.call, Number),
                     y: this.state.data.aggregate_bottom_50_pct,
                     type: 'scatter',
+                    name: 'Bottom 50%',
                   },
                   {
                     x: Array.apply(null, {length: this.state.data.aggregate_bottom_50_pct.length}).map(Number.call, Number),
                     y: this.state.data.aggregate_top_10_pct,
                     type: 'scatter',
+                    name: 'Top 10%',
                   },
                 ]}
               />
@@ -419,20 +421,20 @@ class App extends Component {
         <Container style={{marginTop: 40}}>
           <h3>Actually, that is not true. You can get poorer.</h3>
           <div>If you are allowed to have debts.</div>
-          <div>Adjust the parameter for debt to observe.</div>
+          <div>Adjust the parameter for <b>DEBT</b> to observe.</div>
         </Container>
 
         <Container style={{marginTop: 40}}>
           <h3>And you can get richer</h3>
           <div>The poor can get rich, and the rich can get poor.</div>
-          <div>Click group to color the poorest 50% and the richest 10% to track their movements.</div>
+          <div>Click <b>GROUP</b> to color the poorest 50% and the richest 10% to track their movements.</div>
         </Container>
 
         <Container style={{marginTop: 40, marginBottom: 100}}>
           <h1>About the model</h1>
           <p>Simple Economy is an agent-based model in Dr. Uri Wilensky's Introduction to Agent-Based Modeling, 
-          originally implemented in NetLogo.</p>
-          <p>This web app implements the functionalities of the original model, as well as some features suggested by Dr Wilensky.</p>
+          originally implemented in <a href="https://ccl.northwestern.edu/netlogo/">NetLogo</a>.</p>
+          <p>This web app implements the functionalities of the original model, as well as some features suggested by Dr. Wilensky.</p>
         </Container>
       </div>
     )
